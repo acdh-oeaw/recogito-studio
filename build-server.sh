@@ -20,3 +20,13 @@ sleep 5
 # node ./create-default-groups.js -f ./config.json
 
 echo "Server build completed"
+
+echo "Building Client app"
+
+cd /app/recogito-client 
+
+npm install
+npm run build-node 
+
+echo "Client build completed"
+node ./dist/server/entry.mjs
