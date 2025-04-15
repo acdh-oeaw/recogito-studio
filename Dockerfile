@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM  node:alpine
 
 WORKDIR /app
 
@@ -51,4 +51,4 @@ RUN chown -R 1000:1000 /app
 USER node  
 
 # Start the server and client applications
-CMD ["bash", "-c", "cd /app/recogito-server && ./build-server.sh && wait 60 && cd /app/recogito-client && npm install && npm run build-node && node ./dist/server/entry.mjs"]
+CMD ["sh", "-c", "cd /app/recogito-server && ./build-server.sh && wait 60 && cd /app/recogito-client && npm install && npm run build-node && node ./dist/server/entry.mjs"]
