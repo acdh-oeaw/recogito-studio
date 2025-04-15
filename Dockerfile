@@ -36,8 +36,8 @@ COPY astro.config.mjs /recogito-client/astro.config.mjs
 EXPOSE 3000
 
 # Copy the post-deployment script
-COPY build-server.sh /app/build-server.sh
-RUN chmod +x /app/build-server.sh 
+COPY build-server.sh /app/recogito-server/build-server.sh
+RUN chmod +x /app/recogito-server/build-server.sh 
 
 # Start the server and client applications
 CMD ["bash", "-c", "cd /app/recogito-server && ./build-server.sh && wait 60 && cd /app/recogito-client && npm install && npm run build-node && node ./dist/server/entry.mjs"]
