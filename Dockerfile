@@ -1,11 +1,15 @@
-# Use the official Node.js image as the base image
-FROM node:lts
+FROM alpine:latest
 
-# Set the working directory
 WORKDIR /app
 
-# Install necessary tools
-RUN apt update -y && apt install -y git vim-nox curl iputils-ping
+# Update the package list and install the necessary packages
+RUN apk update && apk add --no-cache \
+    git \
+    vim \
+    curl \
+    iputils
+
+ENV NODE_ENV=production
 
 # Clone the Recogito server repository
 RUN git clone --depth 1 --branch 1.4.0 https://github.com/recogito/recogito-server.git
@@ -16,7 +20,7 @@ RUN rm -f ./recogito-server/config.json && \
 
 # Build the server
 WORKDIR /app/recogito-server
-RUN npm init -y && npm install
+
 # Clone the Recogito client repository
 WORKDIR /app
 RUN git clone --depth 1 --branch 1.4.0 https://github.com/recogito/recogito-client.git
@@ -25,7 +29,7 @@ RUN git clone --depth 1 --branch 1.4.0 https://github.com/recogito/recogito-clie
 RUN rm -f ./recogito-client/src/config.json && \
     curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/1.4.0/docker/config/config.json -o ./recogito-client/src/config.json
 
-# Build the client
+# Configure the client
 WORKDIR /app/recogito-client
 RUN rm .env* && \
     git clone --branch v0.1 https://github.com/recogito/geotagger.git /recogito-client/plugins/geotagger && \
