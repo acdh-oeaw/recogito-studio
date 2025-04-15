@@ -29,8 +29,8 @@ RUN rm -f ./recogito-client/src/config.json && \
 WORKDIR /app/recogito-client
 RUN rm .env* && \
     git clone --branch v0.1 https://github.com/recogito/geotagger.git /recogito-client/plugins/geotagger && \
-    rm -f /recogito-client/astro.config.mjs && \
-    cp /astro.config.mjs /recogito-client/astro.config.mjs 
+    rm -f /recogito-client/astro.config.mjs 
+COPY astro.config.mjs /recogito-client/astro.config.mjs 
 
 # Expose the necessary port
 EXPOSE 3000
