@@ -32,12 +32,19 @@ RUN rm .env* && \
     rm -f /recogito-client/astro.config.mjs 
 COPY astro.config.mjs /recogito-client/astro.config.mjs 
 
+ENV HOST=0.0.0.0
+ENV PORT=3000
+
 # Expose the necessary port
-EXPOSE 3000
+EXPOSE map[3000/tcp:{}]
 
 # Copy the post-deployment script
 COPY build-server.sh /app/recogito-server/build-server.sh
 RUN chmod +x /app/recogito-server/build-server.sh 
+
+# Switch to the non-root user
+RUN chown -R 1000:1000 /app
+USER node  
 
 # Start the server and client applications
 CMD ["bash", "-c", "cd /app/recogito-server && ./build-server.sh && wait 60 && cd /app/recogito-client && npm install && npm run build-node && node ./dist/server/entry.mjs"]
