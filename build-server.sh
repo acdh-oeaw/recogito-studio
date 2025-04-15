@@ -17,6 +17,6 @@ yes | npx supabase db push --db-url postgresql://postgres:$POSTGRES_PASSWORD@$PO
 sleep 5
 
 # Create default groups
-node ./create-default-groups.js -f ./config.json
+# node ./create-default-groups.js -f ./config.json
 
 echo "Server build completed"
