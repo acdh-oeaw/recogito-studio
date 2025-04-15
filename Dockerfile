@@ -51,4 +51,4 @@ RUN chown -R 1000:1000 /app
 USER node  
 
 # Start the server and client applications
-CMD ["sh", "-c", "./app/build-server.sh]
+CMD ["sh", "-c", "./app/build-server.sh"]
