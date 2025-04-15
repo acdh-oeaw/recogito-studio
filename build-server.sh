@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "Starting server build"
+export NODE_OPTIONS="--max-old-space-size=8192"
 
 # Navigate to the server directory
 cd /app/recogito-server
