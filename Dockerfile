@@ -36,7 +36,7 @@ ENV HOST=0.0.0.0
 ENV PORT=3000
 
 # Expose the necessary port
-EXPOSE map[3000/tcp:{}]
+EXPOSE 3000
 
 # Copy the post-deployment script
 COPY build-server.sh /app/recogito-server/build-server.sh
