@@ -44,7 +44,7 @@ RUN rm -f ./recogito-client/src/config.json && \
     echo "Add custom astro config file" && \
     rm -f ./recogito-client/astro.config.node.mjs
 
-COPY astro.config.mjs /app/recogito-client/astro.config.mjs 
+COPY astro.config.node.mjs /app/recogito-client/astro.config.node.mjs 
 
 # Introduce env vars from Github
 RUN echo "Introduce env vars from Github and configure the client" && \
