@@ -27,8 +27,7 @@ RUN rm -f ./recogito-server/config.json && \
     curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-server/config.json
 
 # Build the server
-RUN echo "Introduce env vars from Github and configure the server" \
-    --mount=type=secret,id=secrets_env,dst=/secrets_env \
+RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     cd /app/recogito-server \
@@ -47,13 +46,11 @@ RUN rm -f ./recogito-client/src/config.json && \
 COPY astro.config.node.mjs /app/recogito-client/astro.config.node.mjs 
 
 # Introduce env vars from Github
-RUN echo "Introduce env vars from Github and configure the client" \
-    --mount=type=secret,id=secrets_env,dst=/secrets_env \
+RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     cd /app/recogito-client \
     rm .env* \
-    echo "Install other plugins" \
     npm install @recogito/plugin-ner \
     npm install @recogito/plugin-tei-inliner \
     npm install @recogito/plugin-revisions \
