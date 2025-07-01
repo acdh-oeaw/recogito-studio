@@ -32,7 +32,8 @@ RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     cd /app/recogito-server \
     npm init -y \
-    npm install
+    npm install \
+    npm run build-node
 
 # Clone the Recogito client repository
 RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-client.git
