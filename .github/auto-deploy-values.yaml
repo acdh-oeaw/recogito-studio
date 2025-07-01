@@ -5,16 +5,14 @@ image:
   pullPolicy: Always
   secrets: []
 extraLabels:
-  "ID": "22985"
+  "ID": "$service_id"
 gitlab:
-  app: "recogito-studio-prod"
-  envURL: "git://github.com/acdh-oeaw/recogito-studio.git"
+  app: "$app_name"
+  envURL: "$repo_url"
 service:
   enabled: true
   name: "web"
-  url: "https://recogito-studio.acdh-dev.oeaw.ac.at"
-  additionalHosts:
-    - recogito-studio-prod-main.acdh-dev.oeaw.ac.at
+  url: "$public_url"
   type: ClusterIP
   externalPort: 3000
   internalPort: 3000
