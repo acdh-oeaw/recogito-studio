@@ -26,8 +26,8 @@ sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_ojornoedwjbzoigcdkcn|g' /app/recogito-c
 
 echo "Start the delayed command in the background"
 (
-  echo "Waiting 200 seconds before running trigger.dev deploy..."
-  sleep 200
+  echo "Waiting 30 seconds before running trigger.dev deploy..."
+  sleep 30
   cd /app/recogito-client
   npx trigger.dev@v4-beta dev deploy -c /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
 ) &
