@@ -10,7 +10,7 @@ echo 'Wait for the database to be ready'
 sleep 5
 
 echo 'Create default groups'
-yes | node ./create-default-groups.js -f ./config.json
+yes | node /app/recogito-server/create-default-groups.js -f /app/recogito-server/config.json
 
 echo "adjust NER plugin to trigger-dev v4"
 sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/stanfordCore.ts
