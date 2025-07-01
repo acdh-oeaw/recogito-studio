@@ -32,8 +32,7 @@ WORKDIR /app/recogito-server
 RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    npm init -y \
-    npm install
+    npm init -y; npm install
 
 WORKDIR /app   
 # Clone the Recogito client repository
