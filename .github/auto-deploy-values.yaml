@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/acdh-oeaw/recogito-studio/recogito-studio
-  tag: "latest"
+  tag: "$tag"
   pullPolicy: Always
   secrets: []
 extraLabels:
