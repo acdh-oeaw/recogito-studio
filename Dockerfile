@@ -52,12 +52,7 @@ WORKDIR /app/recogito-client
 RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    npm install @recogito/plugin-ner \
-    npm install @recogito/plugin-tei-inliner \
-    npm install @recogito/plugin-revisions \
-    npm install @recogito/plugin-geotagging \
-    npm install \
-    npm run build-node
+    npm install @recogito/plugin-ner; npm install @recogito/plugin-tei-inliner; npm install @recogito/plugin-revisions; npm install @recogito/plugin-geotagging; npm install; npm run build-node
 
 WORKDIR /app    
 # Expose the necessary port
