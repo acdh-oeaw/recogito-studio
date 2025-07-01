@@ -9,7 +9,7 @@ ENV NODE_OPTIONS="--max-old-space-size=8192" \
     BRANCH=rs/debug
 
 # Copy the post-deployment script
-COPY build-server.sh /app/entrypoint.sh
+COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
     
 # Update the package list and install the necessary packages
