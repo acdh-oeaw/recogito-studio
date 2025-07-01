@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: ghcr.io/acdh-oeaw/recogito-studio/recogito-studio
+  repository: $repository
   tag: "$tag"
   pullPolicy: Always
   secrets: []
