@@ -6,7 +6,7 @@ ENV NODE_OPTIONS="--max-old-space-size=8192" \
     NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=3000 \
-    BRANCH=rs/debug
+    BRANCH=1.6.1
 
 # Copy the post-deployment script
 COPY entrypoint.sh /app/entrypoint.sh
