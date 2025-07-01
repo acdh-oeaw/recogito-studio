@@ -26,15 +26,16 @@ RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-
 RUN rm -f ./recogito-server/config.json && \
     curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-server/config.json
 
+WORKDIR /app/recogito-server    
+
 # Build the server
 RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    cd /app/recogito-server \
     npm init -y \
-    npm install \
-    npm run build-node
+    npm install
 
+WORKDIR /app   
 # Clone the Recogito client repository
 RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-client.git
 
@@ -46,12 +47,12 @@ RUN rm -f ./recogito-client/src/config.json && \
 
 COPY astro.config.node.mjs /app/recogito-client/astro.config.node.mjs 
 
+WORKDIR /app/recogito-client
+
 # Introduce env vars from Github
 RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    cd /app/recogito-client \
-    rm .env* \
     npm install @recogito/plugin-ner \
     npm install @recogito/plugin-tei-inliner \
     npm install @recogito/plugin-revisions \
@@ -59,6 +60,7 @@ RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     npm install \
     npm run build-node
 
+WORKDIR /app    
 # Expose the necessary port
 EXPOSE 3000
 
