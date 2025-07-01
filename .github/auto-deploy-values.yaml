@@ -37,7 +37,7 @@ readinessProbe:
   probeType: "httpGet"
 startupProbe:
   path: "/"
-  initialDelaySeconds: 180
+  initialDelaySeconds: 30
   timeoutSeconds: 3
   scheme: "HTTP"
   probeType: "httpGet"
