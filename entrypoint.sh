@@ -14,12 +14,12 @@ yes | node /app/recogito-server/create-default-groups.js -f /app/recogito-server
 
 echo "adjust NER plugin to trigger-dev v4"
 sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
-sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/stanfordCore.ts
-sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/doStandfordNlp.ts
-sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/nerToXML.ts
-sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/plainTextToXML.ts
-sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/uploadDocumentToRS.ts
-sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/xmlToPlainText.ts
+#sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/stanfordCore.ts
+#sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/doStandfordNlp.ts
+#sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/nerToXML.ts
+#sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/plainTextToXML.ts
+#sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/uploadDocumentToRS.ts
+#sed -i 's|trigger.dev/sdk/v3|trigger.dev/sdk|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger/tasks/xmlToPlainText.ts
 
 echo "adjust to acdh trigger project"
 sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_ojornoedwjbzoigcdkcn|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
