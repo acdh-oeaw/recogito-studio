@@ -33,6 +33,7 @@ readinessProbe:
   timeoutSeconds: 3
   scheme: "HTTP"
   probeType: "httpGet"
+tty: true
 startupProbe:
   path: "/"
   initialDelaySeconds: 30
