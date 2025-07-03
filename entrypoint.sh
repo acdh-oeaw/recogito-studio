@@ -24,4 +24,4 @@ echo "Start the delayed command in the background"
 ) &
 
 echo "Client build completed"
-node /app/recogito-client/dist/server/entry.mjs
+exec node /app/recogito-client/dist/server/entry.mjs
