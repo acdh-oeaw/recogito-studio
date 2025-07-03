@@ -61,7 +61,9 @@ RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     npm install @recogito/plugin-ner; npm install @recogito/plugin-tei-inliner; \
     npm install @recogito/plugin-revisions; npm install @recogito/plugin-geotagging; \
     npm run build-node; \
-    npm install trigger.dev@v4.0.0-v4-beta.21;
+    cd /app/recogito-client/node_modules/@recogito/plugin-ner; \
+    npm install trigger.dev@v4.0.0-v4-beta.21; \
+    npm install @trigger.dev/sdk@v4.0.0-v4-beta.21
 
 WORKDIR /app    
 # Expose the necessary port

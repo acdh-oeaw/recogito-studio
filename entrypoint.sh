@@ -17,10 +17,9 @@ echo "Start the delayed command in the background"
   sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_ojornoedwjbzoigcdkcn|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
   echo "Waiting 30 seconds before running trigger.dev deploy..."
   sleep 180
-  cd  /app/recogito-client
+  cd /app/recogito-client/node_modules/@recogito/plugin-ner
   node_modules/.bin/trigger login -a $TRIGGER_SERVER_URL --profile self-hosted
-  cd  /app/recogito-client/node_modules/@recogito/plugin-ner
-  node_modules/.bin/trigger dev --profile self-hosted deploy -c ./src/trigger.config.ts
+  exec node_modules/.bin/trigger dev --profile self-hosted deploy -c ./src/trigger.config.ts
 ) &
 
 echo "Client build completed"
