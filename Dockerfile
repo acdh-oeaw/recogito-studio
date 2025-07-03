@@ -10,7 +10,8 @@ ENV NODE_OPTIONS="--max-old-space-size=8192" \
 
 # Copy the post-deployment script
 COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh; \
+    chown -R 1000:1000 /app
     
 # Update the package list and install the necessary packages
 RUN apk update && apk add --no-cache \
@@ -18,6 +19,9 @@ RUN apk update && apk add --no-cache \
     vim \
     curl \
     iputils
+
+# Switch to the non-root user
+USER node
 
 # Clone the Recogito server repository
 RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-server.git
@@ -32,7 +36,8 @@ WORKDIR /app/recogito-server
 RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    npm init -y; npm install
+    npm init -y; npm install; \
+    npm install supabase
 
 WORKDIR /app   
 # Clone the Recogito client repository
@@ -52,15 +57,15 @@ WORKDIR /app/recogito-client
 RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    npm install @recogito/plugin-ner; npm install @recogito/plugin-tei-inliner; npm install @recogito/plugin-revisions; npm install @recogito/plugin-geotagging; npm install; npm run build-node
+    npm install; \
+    npm install @recogito/plugin-ner; npm install @recogito/plugin-tei-inliner; \
+    npm install @recogito/plugin-revisions; npm install @recogito/plugin-geotagging; \
+    npm run build-node; \
+    npm install trigger.dev@v4.0.0-v4-beta.21;
 
 WORKDIR /app    
 # Expose the necessary port
 EXPOSE 3000
-
-# Switch to the non-root user
-RUN chown -R 1000:1000 /app
-USER node  
 
 # Start the server and client applications
 CMD ["sh", "-c", "/app/entrypoint.sh"]
