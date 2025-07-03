@@ -33,7 +33,7 @@ RUN rm -f ./recogito-server/config.json && \
 WORKDIR /app/recogito-server    
 
 # Build the server
-RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
+RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     npm init -y; npm install; \
@@ -54,7 +54,7 @@ COPY astro.config.node.mjs /app/recogito-client/astro.config.node.mjs
 WORKDIR /app/recogito-client
 
 # Introduce env vars from Github
-RUN --mount=type=secret,id=secrets_env,dst=/secrets_env \
+RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     npm install; \
