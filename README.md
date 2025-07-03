@@ -4,7 +4,7 @@ This is an attempt to auto-deploy https://github.com/recogito/recogito-studio to
 
 ## Installed Plugins
 
-The following plugins are currently installed:
+The following plugins are currently pulled and installed from via node_modules:
 
 - `plugin-ner`
 - `plugin-tei-inliner`
