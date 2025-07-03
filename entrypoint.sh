@@ -12,15 +12,15 @@ sleep 5
 echo 'Create default groups'
 yes | node /app/recogito-server/create-default-groups.js -f /app/recogito-server/config.json
 
-echo "Start the delayed command in the background"
-(
-  sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_ojornoedwjbzoigcdkcn|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
-  echo "Waiting 30 seconds before running trigger.dev deploy..."
-  sleep 30
-  cd /app/recogito-client/node_modules/@recogito/plugin-ner
-  node_modules/.bin/trigger login -a $TRIGGER_SERVER_URL --profile self-hosted
-  echo y | exec node_modules/.bin/trigger deploy --env staging --profile self-hosted -c ./src/trigger.config.ts
-) &
+#echo "Start the delayed command in the background"
+# (
+#  sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_ojornoedwjbzoigcdkcn|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
+#  echo "Waiting 30 seconds before running trigger.dev deploy..."
+#  sleep 30
+#  cd /app/recogito-client/node_modules/@recogito/plugin-ner
+#  node_modules/.bin/trigger login -a $TRIGGER_SERVER_URL --profile self-hosted
+#  echo y | exec node_modules/.bin/trigger dev deploy --profile self-hosted -c ./src/trigger.config.ts
+# ) &
 
 echo "Client build completed"
 exec node /app/recogito-client/dist/server/entry.mjs
