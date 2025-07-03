@@ -19,7 +19,7 @@ echo "Start the delayed command in the background"
   sleep 30
   cd /app/recogito-client/node_modules/@recogito/plugin-ner
   node_modules/.bin/trigger login -a $TRIGGER_SERVER_URL --profile self-hosted
-  echo y | exec node_modules/.bin/trigger dev --profile self-hosted deploy -c ./src/trigger.config.ts
+  echo y | exec node_modules/.bin/trigger --env staging --profile self-hosted deploy -c ./src/trigger.config.ts
 ) &
 
 echo "Client build completed"
