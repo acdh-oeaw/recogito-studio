@@ -19,7 +19,9 @@ echo "Start the delayed command in the background"
   sleep 30
   cd  /app/recogito-client/node_modules/@recogito/plugin-ner
   yes | npm install @trigger.dev/sdk@v4-beta @trigger.dev/build@v4-beta
+  sleep 30
   yes | npx trigger.dev@v4-beta login -a $TRIGGER_SERVER_URL --profile self-hosted
+  sleep 30
   yes | npx trigger.dev@v4-beta dev --profile self-hosted deploy -c ./src/trigger.config.ts
 ) &
 
