@@ -18,7 +18,7 @@ echo "Start the delayed command in the background"
   echo "Waiting 30 seconds before running trigger.dev deploy..."
   sleep 30
   cd  /app/recogito-client/node_modules/@recogito/plugin-ner
-  yes | npx trigger.dev@v4-beta login -a https://recogito-trigger-v4.acdh-dev.oeaw.ac.at --profile self-hosted
+  yes | npx trigger.dev@v4-beta login -a $TRIGGER_SERVER_URL --profile self-hosted
   yes | npx trigger.dev@v4-beta dev --profile self-hosted deploy -c ./src/trigger.config.ts
 ) &
 
