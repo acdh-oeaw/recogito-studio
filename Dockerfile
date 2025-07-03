@@ -18,7 +18,18 @@ RUN apk update && apk add --no-cache \
     git \
     vim \
     curl \
-    iputils
+    iputils \
+    xdg-utils \
+    docker \
+    openrc \
+    shadow \
+    sudo
+
+# Create a non-root user
+RUN useradd -m dockeruser && echo "dockeruser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Enable Docker service 
+RUN rc-update add docker boot
 
 # Switch to the non-root user
 USER node
