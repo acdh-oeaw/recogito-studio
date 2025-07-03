@@ -23,7 +23,7 @@ RUN apk update && apk add --no-cache \
     docker \
     openrc \
     shadow \
-    sudo
+    sudo
 
 # Create a non-root user
 RUN useradd -m dockeruser && echo "dockeruser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
