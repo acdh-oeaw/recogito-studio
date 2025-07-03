@@ -33,8 +33,11 @@ readinessProbe:
   timeoutSeconds: 3
   scheme: "HTTP"
   probeType: "httpGet"
-tty: true
+extraVolumeMounts:
+  tty: true
+  stdin: true
 startupProbe:
+  enabled: true
   path: "/"
   initialDelaySeconds: 30
   timeoutSeconds: 3
