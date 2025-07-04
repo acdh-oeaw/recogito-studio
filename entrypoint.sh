@@ -13,7 +13,7 @@ echo 'Create default groups'
 yes | node /app/recogito-server/create-default-groups.js -f /app/recogito-server/config.json
 
 # Adjust project in NER plugin
-sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_ojornoedwjbzoigcdkcn|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
+sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_cafkhcwrdntlvmvqkdwg|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
 
 #echo "Start the delayed command in the background"
 # (
