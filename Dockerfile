@@ -2,6 +2,7 @@ FROM  node:alpine
 
 WORKDIR /app
 
+# Add env vars
 ENV NODE_OPTIONS="--max-old-space-size=8192" \
     NODE_ENV=production \
     HOST=0.0.0.0 \
