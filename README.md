@@ -10,3 +10,5 @@ The following plugins are currently pulled and installed from via node_modules:
 - `plugin-tei-inliner`
 - `plugin-revisions`
 - `plugin-geotagging`
+
+NER Plugin: https://github.com/acdh-oeaw/plugin-ner.git
