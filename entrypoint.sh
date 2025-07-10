@@ -12,6 +12,9 @@ sleep 5
 echo 'Create default groups'
 yes | node /app/recogito-server/create-default-groups.js -f /app/recogito-server/config.json
 
+echo 'Wait for the database to be ready'
+sleep 10
+
 # Adjust project in NER plugin
 sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_cafkhcwrdntlvmvqkdwg|g' /app/recogito-client/node_modules/@recogito/plugin-ner/src/trigger.config.ts
 
