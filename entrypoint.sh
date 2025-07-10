@@ -25,5 +25,9 @@ sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_cafkhcwrdntlvmvqkdwg|g' /app/recogito-c
 #  echo y | exec node_modules/.bin/trigger dev deploy --profile self-hosted -c ./src/trigger.config.ts
 # ) &
 
+cd /app/recogito-client/
+npm install
+npm run build-node
+
 echo "Client build completed"
 exec node /app/recogito-client/dist/server/entry.mjs
