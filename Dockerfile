@@ -47,7 +47,8 @@ RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-
 
 # Remove the default client config and download the custom config
 RUN rm -f ./recogito-client/src/config.json && \
-    curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-client/src/config.json && \
+    curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/1.6.2/docker/config/config.json -o ./recogito-client/src/config.json && \
+#    curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-client/src/config.json && \
     echo "Add custom astro config file" && \
     rm -f ./recogito-client/astro.config.node.mjs
 
