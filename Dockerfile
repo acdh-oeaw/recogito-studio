@@ -29,7 +29,8 @@ RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-
 
 # Remove the default server config and download the custom config
 RUN rm -f ./recogito-server/config.json && \
-    curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-server/config.json
+   curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/1.6.2/docker/config/config.json -o ./recogito-server/config.json
+   # curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-server/config.json
 
 WORKDIR /app/recogito-server    
 
