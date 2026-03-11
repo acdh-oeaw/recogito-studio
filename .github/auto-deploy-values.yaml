@@ -19,8 +19,8 @@ service:
 ingress:
   enabled: false
   path: "/"
+  className: "nginx"
   annotations:
-    kubernetes.io/ingressClassName: "nginx"
 livenessProbe:
   path: "/"
   initialDelaySeconds: 15
