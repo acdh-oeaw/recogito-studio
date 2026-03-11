@@ -28,6 +28,12 @@ sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_cafkhcwrdntlvmvqkdwg|g' /app/recogito-c
 #  echo y | exec node_modules/.bin/trigger dev deploy --profile self-hosted -c ./src/trigger.config.ts
 # ) &
 
+echo "🔧 Strong patch for trigger.config.ts ..."
+# Remove all imports from @trigger.dev/build/*
+sed -i '/@trigger.dev\/build/d' /app/recogito-client/trigger.config.ts
+# Remove any build:{...} block
+sed -i '/build:[[:space:]]*{/,/}/d' /app/recogito-client/trigger.config.ts
+
 cd /app/recogito-client/
 npm install
 npm run build-node
