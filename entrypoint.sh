@@ -35,13 +35,13 @@ sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_cafkhcwrdntlvmvqkdwg|g' \
 # 3) Patch recogito-client trigger.config.ts
 #############################################
 
-echo "🔧 Patch for trigger.config.ts ..."
+#echo "🔧 Patch for trigger.config.ts ..."
 
 # Remove all imports from @trigger.dev/build/*
-sed -i '/@trigger.dev\/build/d' /app/recogito-client/trigger.config.ts
+#sed -i '/@trigger.dev\/build/d' /app/recogito-client/trigger.config.ts
 
 # Remove any build:{...} block safely
-sed -i '/build:[[:space:]]*{/,/}/d' /app/recogito-client/trigger.config.ts
+#sed -i '/build:[[:space:]]*{/,/}/d' /app/recogito-client/trigger.config.ts
 
 
 #############################################
