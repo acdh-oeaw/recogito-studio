@@ -32,20 +32,7 @@ sed -i 's|proj_fyeypkhgyaejpiweobwq|proj_cafkhcwrdntlvmvqkdwg|g' \
 
 
 #############################################
-# 3) Patch recogito-client trigger.config.ts
-#############################################
-
-#echo "🔧 Patch for trigger.config.ts ..."
-
-# Remove all imports from @trigger.dev/build/*
-#sed -i '/@trigger.dev\/build/d' /app/recogito-client/trigger.config.ts
-
-# Remove any build:{...} block safely
-#sed -i '/build:[[:space:]]*{/,/}/d' /app/recogito-client/trigger.config.ts
-
-
-#############################################
-# 4) Install client deps + build client
+# 3) Install client deps + build client
 #############################################
 
 cd /app/recogito-client/
@@ -55,27 +42,8 @@ npm run build-node
 
 echo "Client build completed"
 
-
 #############################################
-# 5) Trigger.dev deploy (async background job)
-#############################################
-
-echo "🚀 Starting Trigger.dev deploy in background..."
-
-(
-  cd /app/recogito-client
-
-  echo "Waiting 10 seconds before running Trigger.dev deploy..."
-  sleep 10
-  
-  echo "Running: npx trigger.dev@latest deploy -c ./trigger.config.ts"
-  npx trigger.dev@latest deploy -c ./trigger.config.ts || \
-    echo "⚠ Warning: Trigger.dev deploy failed, continuing anyway"
-) &
-
-
-#############################################
-# 6) Start Recogito Client server
+# 4) Start Recogito Client server
 #############################################
 
 echo "Starting Recogito client server..."
