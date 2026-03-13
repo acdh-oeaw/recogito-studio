@@ -1,4 +1,4 @@
-FROM  node:alpine
+FROM  node:24-slim
 
 WORKDIR /app
 
@@ -15,11 +15,18 @@ RUN chmod +x /app/entrypoint.sh; \
     chown -R 1000:1000 /app
     
 # Update the package list and install the necessary packages
-RUN apk update && apk add --no-cache \
-    git \
+
+RUN apt-get update && apt-get install -y \
+    python3 \
     vim \
     curl \
-    iputils 
+    iputils \
+    make \
+    g++ \
+    libc6 \
+    libstdc++6 \
+    git \
+    && rm -rf /var/lib/apt/lists/
     
 # Switch to the non-root user
 USER node
