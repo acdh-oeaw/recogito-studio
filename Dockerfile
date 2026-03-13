@@ -18,15 +18,14 @@ RUN chmod +x /app/entrypoint.sh; \
 
 RUN apt-get update && apt-get install -y \
     python3 \
-    vim \
-    curl \
-    iputils \
     make \
     g++ \
-    libc6 \
-    libstdc++6 \
     git \
-    && rm -rf /var/lib/apt/lists/
+    curl \
+    iputils-ping \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
     
 # Switch to the non-root user
 USER node
