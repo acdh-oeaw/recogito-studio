@@ -50,6 +50,11 @@ WORKDIR /app
 # Clone the Recogito client repository
 RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-client.git
 
+# Add missing invite template (only exists on main branch, not in 1.9.7)
+RUN mkdir -p /app/recogito-client/public/templates && \
+    curl -LJ https://raw.githubusercontent.com/recogito/recogito-client/main/public/templates/invite.html \
+    -o /app/recogito-client/public/templates/invite.html
+
 # Remove the default client config and download the custom config
 RUN rm -f ./recogito-client/src/config.json && \
     curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-client/src/config.json && \
