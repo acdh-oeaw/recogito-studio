@@ -1,3 +1,4 @@
+
 #!/bin/sh
 set -e
 
@@ -14,6 +15,17 @@ yes | node_modules/.bin/supabase db push \
 
 echo 'Wait for the database to be ready'
 sleep 5
+
+##########################################################
+# WAIT FOR SUPABASE REST API (fixes null results)
+##########################################################
+echo "Waiting for Supabase REST API to become ready..."
+until curl -s -f "${SUPABASE_HOST}/rest/v1" >/dev/null 2>&1; do
+  echo "Supabase REST not ready yet..."
+  sleep 3
+done
+echo "Supabase REST API is ready."
+##########################################################
 
 echo 'Create default groups'
 yes | node /app/recogito-server/create-default-groups.js -f /app/recogito-server/config.json
