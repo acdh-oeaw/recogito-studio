@@ -33,8 +33,6 @@ USER node
 # Clone the Recogito server repository
 RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-server.git
 
-# Replace broken Recogito 1.9.7 group creation script with safe patched version
-ADD create-default-groups-patched.js /app/recogito-server/create-default-groups.js
 
 # Remove the default server config and download the custom config
 RUN rm -f ./recogito-server/config.json && \

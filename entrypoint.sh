@@ -19,12 +19,15 @@ sleep 5
 ##########################################################
 # WAIT FOR SUPABASE REST API (fixes null results)
 ##########################################################
-echo "Waiting for Supabase REST API to become ready..."
-until curl -s -f "${SUPABASE_HOST}/rest/v1" >/dev/null 2>&1; do
-  echo "Supabase REST not ready yet..."
+echo "Waiting for Supabase REST API..."
+until curl -s -H "apikey: ${SUPABASE_SERVICE_KEY}" \
+  -o /dev/null -w "%{http_code}" \
+  "${SUPABASE_HOST}/rest/v1/policies" | grep -q "200"; do
+
+  echo "Supabase REST not ready at ${SUPABASE_HOST}..."
   sleep 3
 done
-echo "Supabase REST API is ready."
+echo "Supabase REST API is ready!"
 ##########################################################
 
 echo 'Create default groups'
