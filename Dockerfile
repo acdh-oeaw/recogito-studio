@@ -37,9 +37,15 @@ RUN git clone --depth 1 --branch ${BRANCH} https://github.com/recogito/recogito-
 RUN rm -f ./recogito-server/config.json && \
     curl -LJ https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json -o ./recogito-server/config.json
 
-# FULL PATCH for Recogito 1.9.7 Supabase null-return bug
-RUN sed -i 's/\.data\[/\.data \&\& \.data\[/' recogito-server/create-default-groups.js && \
-    sed -i 's/\.data.length/\.data \&\& \.data.length/' recogito-server/create-default-groups.js
+# FULL Recogito 1.9.7 Supabase null safety patch
+RUN sed -i \
+  -e 's/\.data.length/\.data \&\& \.data.length/' \
+  -e 's/\.data\[/\.data \&\& \.data\[/' \
+  -e 's/orgAdminProfile.data\[0\]/(orgAdminProfile.data \&\& orgAdminProfile.data[0])/' \
+  -e 's/getOrgAdminResponse.data\[0\]/(getOrgAdminResponse.data \&\& getOrgAdminResponse.data[0])/' \
+  -e 's/documentsBucketResp.data.length/(documentsBucketResp.data \&\& documentsBucketResp.data.length)/' \
+  -e 's/jobsBucketResp.data.length/(jobsBucketResp.data \&\& jobsBucketResp.data.length)/' \
+  recogito-server/create-default-groups.js
 
 WORKDIR /app/recogito-server    
 
