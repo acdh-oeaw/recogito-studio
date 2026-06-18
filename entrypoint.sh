@@ -11,7 +11,8 @@ cd /app/recogito-server
 echo 'Push database schema'
 export PGSSLMODE=disable
 yes | node_modules/.bin/supabase db push \
-  --db-url "postgresql://postgres:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/postgres"
+  --db-url "postgresql://postgres:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/postgres" \
+  --include-all
 
 echo 'Wait for the database to be ready'
 sleep 5
