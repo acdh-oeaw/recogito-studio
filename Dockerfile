@@ -62,15 +62,6 @@ RUN rm -f ./recogito-client/src/config.json && \
     echo "Add custom astro config file" && \
     rm -f ./recogito-client/astro.config.node.mjs
 
-# Override Recogito files with debug versions
-COPY api-run-job.ts /app/recogito-client/src/pages/api/run-job.ts
-COPY runJob.ts /app/recogito-client/src/trigger/runJob.ts
-
-# Verify custom files were copied
-RUN echo "===== VERIFY CUSTOM FILES =====" && \
-    grep -n "API RUN-JOB HIT" /app/recogito-client/src/pages/api/run-job.ts && \
-    grep -n "RUN-JOB START" /app/recogito-client/src/trigger/runJob.ts
-
 COPY astro.config.node.mjs /app/recogito-client/astro.config.node.mjs 
 
 WORKDIR /app/recogito-client
