@@ -19,7 +19,7 @@ service:
 ingress:
   enabled: false
   path: "/"
-  className: "nginx"
+  className: "traefik"
   annotations:
 livenessProbe:
   path: "/"
