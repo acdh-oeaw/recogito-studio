@@ -54,12 +54,6 @@ WORKDIR /app
 RUN git clone --depth 1 --branch "${BRANCH}" \
     https://github.com/recogito/recogito-client.git
 
-# Download the invite template
-RUN mkdir -p /app/recogito-client/public/templates && \
-    curl -fL \
-    https://raw.githubusercontent.com/recogito/recogito-client/main/public/templates/invite.html \
-    -o /app/recogito-client/public/templates/invite.html
-
 # Replace the client configuration
 RUN curl -fL \
     "https://raw.githubusercontent.com/recogito/recogito-studio/${BRANCH}/docker/config/config.json" \
