@@ -81,14 +81,14 @@ RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     npm install @recogito/plugin-revisions; \
     npm install @recogito/plugin-geotagging; \
     npm install --include=dev --save-exact \
-        trigger.dev@4.7.4 \
-        @trigger.dev/sdk@4.7.4 \
-        @trigger.dev/build@4.7.4; \
+        trigger.dev@4.8.3 \
+        @trigger.dev/sdk@4.8.3 \
+        @trigger.dev/build@4.8.3; \
     cd /app/recogito-client/node_modules/@recogito/plugin-ner; \
     npm install --include=dev --save-exact \
-        trigger.dev@4.7.4 \
-        @trigger.dev/sdk@4.7.4 \
-        @trigger.dev/build@4.7.4; \
+        trigger.dev@4.8.3 \
+        @trigger.dev/sdk@4.8.3 \
+        @trigger.dev/build@4.8.3; \
     cd /app/recogito-client; \
     npm run build-node
 
