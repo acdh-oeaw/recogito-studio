@@ -44,9 +44,9 @@ RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     set -e; \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    npm init -y; \
-    npm install; \
-    npm install supabase@2.121.0
+    npm install --include=dev --save-dev --save-exact supabase@2.121.0; \
+    test -x node_modules/.bin/supabase; \
+    node_modules/.bin/supabase --version
 
 WORKDIR /app
 
