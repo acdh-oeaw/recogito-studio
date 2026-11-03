@@ -70,11 +70,6 @@ RUN sed -i \
     's|timeago.js/lib/lang/de|timeago.js/esm/lang/de|' \
     src/components/TimeAgo/TimeAgo.tsx
 
-# Fix password recovery redirect to include the current locale
-RUN sed -i \
-    's|const redirectTo = `${host}/reset-password`;|const redirectTo = `${host}/${i18n.language}/reset-password`;|' \
-    src/apps/auth-forgot-password/ForgotPassword.tsx
-
 # Install dependencies, align Trigger.dev versions, then build
 RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
