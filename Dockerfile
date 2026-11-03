@@ -95,10 +95,6 @@ RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     set -e; \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     npm install --include=dev; \
-    npm install @recogito/plugin-ner; \
-    npm install @recogito/plugin-tei-inliner; \
-    npm install @recogito/plugin-revisions; \
-    npm install @recogito/plugin-geotagging; \
     npm install --include=dev --save-exact \
         trigger.dev@4.8.3 \
         @trigger.dev/sdk@4.8.3 \
