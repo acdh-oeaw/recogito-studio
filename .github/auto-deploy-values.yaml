@@ -22,13 +22,20 @@ ingress:
   className: "traefik"
   annotations:
 livenessProbe:
-  path: "/"
+  path: "/api/health"
   initialDelaySeconds: 15
   timeoutSeconds: 15
   scheme: "HTTP"
   probeType: "httpGet"
 readinessProbe:
-  path: "/"
+  path: "/api/health"
+  initialDelaySeconds: 30
+  timeoutSeconds: 3
+  scheme: "HTTP"
+  probeType: "httpGet"
+startupProbe:
+  enabled: true
+  path: "/api/health"
   initialDelaySeconds: 30
   timeoutSeconds: 3
   scheme: "HTTP"
@@ -36,10 +43,3 @@ readinessProbe:
 extraVolumeMounts:
   tty: true
   stdin: true
-startupProbe:
-  enabled: true
-  path: "/"
-  initialDelaySeconds: 30
-  timeoutSeconds: 3
-  scheme: "HTTP"
-  probeType: "httpGet"
