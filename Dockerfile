@@ -1,4 +1,4 @@
-FROM node:24-slim
+FROM node:26-slim
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ ENV NODE_OPTIONS="--max-old-space-size=8192" \
     NODE_ENV=production \
     HOST=0.0.0.0 \
     PORT=3000 \
-    BRANCH=1.11.0
+    BRANCH=1.12.0
 
 # Copy the startup script
 COPY entrypoint.sh /app/entrypoint.sh
