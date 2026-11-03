@@ -46,7 +46,7 @@ RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     npm init -y; \
     npm install; \
-    npm install supabase
+    npm install supabase@2.121.0
 
 WORKDIR /app
 
