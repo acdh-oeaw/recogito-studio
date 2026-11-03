@@ -70,6 +70,25 @@ RUN sed -i \
     's|timeago.js/lib/lang/de|timeago.js/esm/lang/de|' \
     src/components/TimeAgo/TimeAgo.tsx
 
+# Fix password recovery redirect to preserve the current locale
+RUN python3 - <<'PY'
+from pathlib import Path
+
+p = Path("src/apps/auth-forgot-password/ForgotPassword.tsx")
+s = p.read_text()
+
+old = "const redirectTo = `${host}/reset-password`;"
+new = """const redirectTo = `${host}${window.location.pathname.replace(
+        /\\/forgot-password$/,
+        '/reset-password'
+      )}`;"""
+
+if old not in s:
+    raise SystemExit("Password recovery redirect source not found")
+
+p.write_text(s.replace(old, new))
+PY
+
 # Install dependencies, align Trigger.dev versions, then build
 RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
