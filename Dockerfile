@@ -65,11 +65,6 @@ COPY --chown=node:node astro.config.node.mjs \
 
 WORKDIR /app/recogito-client
 
-# Fix German timeago locale import used by notifications
-RUN sed -i \
-    's|timeago.js/lib/lang/de|timeago.js/esm/lang/de|' \
-    src/components/TimeAgo/TimeAgo.tsx
-
 # Fix password recovery redirect to preserve the current locale
 RUN python3 - <<'PY'
 from pathlib import Path
@@ -89,23 +84,31 @@ if old not in s:
 p.write_text(s.replace(old, new))
 PY
 
-# Install dependencies, align Trigger.dev versions, then build
+# Install plugins before Astro loads INSTALLED_PLUGINS.
+# Pin the plugin releases currently used by this deployment.
+ENV INSTALLED_PLUGINS="@recogito/plugin-geotagging@0.6.0,@recogito/plugin-ner@0.5.1,@recogito/plugin-revisions@0.2.0,@recogito/plugin-tei-inliner@0.2.0"
+
+COPY --chown=node:node verify-sdk.cjs /app/verify-sdk.cjs
+
 RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     set -e; \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
-    npm install --include=dev; \
+    npm ci --include=dev; \
+    npm pkg set 'overrides[@recogito/studio-sdk]=$@recogito/studio-sdk' \
+        'overrides[@trigger.dev/sdk]=$@trigger.dev/sdk'; \
     npm install --include=dev --save-exact \
         trigger.dev@4.8.3 \
         @trigger.dev/sdk@4.8.3 \
-        @trigger.dev/build@4.8.3; \
-    cd /app/recogito-client/node_modules/@recogito/plugin-ner; \
-    npm install --include=dev --save-exact \
-        trigger.dev@4.8.3 \
-        @trigger.dev/sdk@4.8.3 \
-        @trigger.dev/build@4.8.3; \
-    cd /app/recogito-client; \
-    npm run build-node
+        @trigger.dev/build@4.8.3 \
+        @recogito/plugin-geotagging@0.6.0 \
+        @recogito/plugin-ner@0.5.1 \
+        @recogito/plugin-revisions@0.2.0 \
+        @recogito/plugin-tei-inliner@0.2.0; \
+    npm ls @recogito/studio-sdk @trigger.dev/sdk @trigger.dev/build; \
+    node /app/verify-sdk.cjs; \
+    npm run build-node; \
+    node /app/verify-sdk.cjs
 
 WORKDIR /app
 
