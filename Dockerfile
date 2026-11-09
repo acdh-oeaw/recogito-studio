@@ -39,7 +39,7 @@ RUN curl -fL \
 
 WORKDIR /app/recogito-server
 
-# Install server dependencies
+# Install server dependencies and Supabase CLI
 RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     set -e; \
@@ -85,23 +85,27 @@ p.write_text(s.replace(old, new))
 PY
 
 # Install plugins before Astro loads INSTALLED_PLUGINS.
-# Pin the plugin releases currently used by this deployment.
-ENV INSTALLED_PLUGINS="@recogito/plugin-geotagging@0.6.0,@recogito/plugin-ner@0.5.1,@recogito/plugin-revisions@0.2.0,@recogito/plugin-tei-inliner@0.2.0"
+#
+# GeoTagger 0.7.0 is used because it no longer requires
+# the previous studio-sdk overrides workaround.
+ENV INSTALLED_PLUGINS="@recogito/plugin-geotagging@0.7.0,@recogito/plugin-ner@0.5.1,@recogito/plugin-revisions@0.2.0,@recogito/plugin-tei-inliner@0.2.0"
 
+# Verify that all plugins resolve the same root studio-sdk.
 COPY --chown=node:node verify-sdk.cjs /app/verify-sdk.cjs
 
+# Install client dependencies, pin the Trigger.dev versions used
+# by this deployment, install the plugins, verify the dependency tree,
+# then build the Node server.
 RUN --mount=type=secret,uid=1000,gid=1000,id=secrets_env,dst=/secrets_env \
     --mount=type=cache,target=/tmp/cache \
     set -e; \
     if [ -f /secrets_env ]; then . /secrets_env; fi; \
     npm ci --include=dev; \
-    npm pkg set 'overrides[@recogito/studio-sdk]=$@recogito/studio-sdk' \
-        'overrides[@trigger.dev/sdk]=$@trigger.dev/sdk'; \
     npm install --include=dev --save-exact \
         trigger.dev@4.8.3 \
         @trigger.dev/sdk@4.8.3 \
         @trigger.dev/build@4.8.3 \
-        @recogito/plugin-geotagging@0.6.0 \
+        @recogito/plugin-geotagging@0.7.0 \
         @recogito/plugin-ner@0.5.1 \
         @recogito/plugin-revisions@0.2.0 \
         @recogito/plugin-tei-inliner@0.2.0; \
