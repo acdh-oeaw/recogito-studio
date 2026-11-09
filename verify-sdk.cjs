@@ -7,23 +7,27 @@ const root = process.cwd();
 const pkg = require(path.join(root, 'package.json'));
 const lock = require(path.join(root, 'package-lock.json'));
 
-const rootSdkPath = 'node_modules/@recogito/studio-sdk';
+const sdkKey = 'node_modules/@recogito/studio-sdk';
+const rootSdkPath = path.join(root, sdkKey);
 
-const rootSdkLock = lock.packages[rootSdkPath];
+assert.ok(
+  fs.existsSync(rootSdkPath),
+  `Missing root ${sdkKey}`
+);
+
+const rootSdkLock = lock.packages[sdkKey];
 
 assert.ok(
   rootSdkLock,
-  'Root @recogito/studio-sdk is missing from package-lock.json'
+  `Missing ${sdkKey} in package-lock.json`
 );
 
 const rootSdkVersion = rootSdkLock.version;
+const rootSdkRealPath = fs.realpathSync(rootSdkPath);
 
-const rootSdkRealPath = fs.realpathSync(
-  path.join(root, rootSdkPath)
-);
-
-// GeoTagger is the plugin being verified.
-// It must resolve the same SDK instance as the application.
+// Verify that GeoTagger resolves the ROOT SDK.
+// require.resolve() returns the package entry point
+// (e.g. dist/index.js), not the package directory.
 const geotaggingPath = path.join(
   root,
   'node_modules/@recogito/plugin-geotagging'
@@ -34,20 +38,20 @@ assert.ok(
   'Missing @recogito/plugin-geotagging'
 );
 
-const geotaggingSdk = require.resolve(
+const geotaggingResolved = require.resolve(
   '@recogito/studio-sdk',
   { paths: [geotaggingPath] }
 );
 
-const geotaggingSdkRealPath = fs.realpathSync(geotaggingSdk);
+const geotaggingRealPath = fs.realpathSync(geotaggingResolved);
 
-assert.equal(
-  geotaggingSdkRealPath,
-  rootSdkRealPath,
+assert.ok(
+  geotaggingRealPath === rootSdkRealPath ||
+  geotaggingRealPath.startsWith(rootSdkRealPath + path.sep),
   [
     'GeoTagger resolves a different studio-sdk instance.',
     `Root SDK: ${rootSdkRealPath}`,
-    `GeoTagger SDK: ${geotaggingSdkRealPath}`
+    `GeoTagger SDK: ${geotaggingRealPath}`
   ].join('\n')
 );
 
@@ -56,34 +60,52 @@ console.log(
   `GeoTagger resolves the same SDK instance.`
 );
 
-// Show the legacy plugin SDK versions for diagnostics.
-// These are expected to remain separate until those plugins are upgraded.
+// Legacy plugins are expected to use their own 0.9.1 SDK
+// until those plugins are upgraded.
 for (const name of [
   'plugin-ner',
   'plugin-revisions',
   'plugin-tei-inliner'
 ]) {
-  const plugin = path.join(root, 'node_modules/@recogito', name);
+  const plugin = path.join(
+    root,
+    'node_modules/@recogito',
+    name
+  );
 
   if (!fs.existsSync(plugin))
     continue;
 
   try {
     const resolved = require.resolve(
-      '@recogito/studio-sdk/package.json',
+      '@recogito/studio-sdk',
       { paths: [plugin] }
     );
 
-    const pluginSdk = require(resolved);
+    const resolvedRealPath = fs.realpathSync(resolved);
 
     console.log(
-      `${name} resolves studio-sdk ${pluginSdk.version}`
+      `${name} resolves studio-sdk from ${resolvedRealPath}`
     );
-  } catch (err) {
+  } catch {
     console.warn(
       `${name}: could not resolve studio-sdk`
     );
   }
 }
 
-console.log('SDK verification passed.');
+for (const key of [
+  'dependencies',
+  'devDependencies',
+  'optionalDependencies'
+]) {
+  assert.deepEqual(
+    lock.packages[''][key],
+    pkg[key],
+    `package/lock mismatch: ${key}`
+  );
+}
+
+console.log(
+  `SDK verification passed. Root SDK: ${rootSdkVersion}`
+);
